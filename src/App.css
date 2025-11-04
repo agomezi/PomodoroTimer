@@ -33,3 +33,7 @@ button.with-text svg {
   float: left;
   marigin-right: 5px;
 }
+
+label {
+  display: block;
+}
