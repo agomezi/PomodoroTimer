@@ -35,3 +35,41 @@
   height: 20px;
   padding: 2px 0;
 }
+
+.slider.green .rc-slider-rail {
+  background-color: #129900;
+  height: 16px;
+  border-radius: 8px;
+}
+
+.slider.green .rc-slider-track {
+  background-color: #129900;
+  height: 16px;
+  border-radius: 8px;
+}
+
+.slider.green .rc-slider-handle {
+  background-color: #fff;
+  border: 2px solid #129900;
+  width: 20px;
+  height: 20px;
+  margin-top: -2px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.slider.green .rc-slider-handle:hover,
+.slider.green .rc-slider-handle:active {
+  border-color: #129900;
+  box-shadow: 0 2px 6px rgba(2, 151, 9, 0.2);
+}
+
+.slider.green .rc-slider-handle:focus {
+  border-color: #129900;
+  box-shadow: 0 0 0 3px rgba(2, 151, 9, 0.2);
+}
+
+.slider.green {
+  border: none;
+  height: 20px;
+  padding: 2px 0;
+}
