@@ -34,8 +34,8 @@ function App() {
       breakMinutes: breakMinutes
     };
 
-    setProfiles([...profiles, newProfiles]);
-    setProfiles(nextId + 1);
+    setProfiles([...profiles, newProfile]);
+    setNextId(nextId + 1);
 
   }
 
@@ -53,7 +53,7 @@ function App() {
           ...profile,
           name: name,
           workMinutes: workMinutes,
-          breakMinute: breakMinutes,
+          breakMinutes: breakMinutes,
         };
       }
       return profile;
@@ -89,6 +89,7 @@ function App() {
           addProfile,
           applyProfile,
           updateProfile,
+          deleteProfile,
         }}
       >
         {showProfiles ? <Profiles /> : showSettings ? <Settings /> : <Timer />}
