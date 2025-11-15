@@ -5,6 +5,7 @@ import PauseButton from "./PauseButton";
 import SettingsButton from "./SettingsButton";
 import { useContext, useState, useEffect, useRef } from "react";
 import SettingsContext from "./SettingsContext";
+import ProfileButton from "./ProfileButton";
 
 const red = "#f54e4e";
 const green = "#4aec8c";
@@ -101,6 +102,8 @@ function Timer() {
       <div style={{ marginTop: "20px" }}>
         <SettingsButton onClick={() => SettingsInfo.setShowSettings(true)} />
       </div>
+      <div> <ProfileButton /> </div>
+    
     </div>
   );
 }
