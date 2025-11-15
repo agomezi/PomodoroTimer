@@ -30,8 +30,10 @@ button.with-text {
 
 button.with-text svg {
   width: 36px;
+  height: 36px;
   float: left;
-  marigin-right: 5px;
+  margin-right: 5px;
+  vertical-align: middle;
 }
 
 label {

@@ -4,6 +4,7 @@ import "./Slider.css";
 import SettingsContext from "./SettingsContext";
 import { useContext } from "react";
 import BackButtion from "./BackButton";
+import DefaultButton from "./DefaultButton";
 
 function Settings() {
   const settingsInfo = useContext(SettingsContext);
@@ -26,8 +27,17 @@ function Settings() {
         min={1}
         max={120}
       />
-      <div style={{ textAlign: "center", marginTop: "20px" }}>
+      <div style={{ textAlign: "center", marginTop: "20px", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
         <BackButtion onClick={() => settingsInfo.setShowSettings(false)} />
+
+          <DefaultButton onClick={() => {
+            settingsInfo.setWorkMinutes(45);
+            settingsInfo.setBreakMinutes(15);
+          }}/>
+          
+      </div>
+      <div style={{marginTop: "20px"}}>
+        
       </div>
     </div>
   );
