@@ -2,9 +2,11 @@ import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import "react-circular-progressbar/dist/styles.css";
 import PlayButton from "./PlayButton";
 import PauseButton from "./PauseButton";
+import Profiles from "./Profiles";
 import SettingsButton from "./SettingsButton";
 import { useContext, useState, useEffect, useRef } from "react";
 import SettingsContext from "./SettingsContext";
+import ProfileButton from "./ProfileButton";
 
 const red = "#f54e4e";
 const green = "#4aec8c";
@@ -101,6 +103,8 @@ function Timer() {
       <div style={{ marginTop: "20px" }}>
         <SettingsButton onClick={() => SettingsInfo.setShowSettings(true)} />
       </div>
+      <div> <ProfileButton onClick={()=> SettingsInfo.setShowProfiles(true)} /> </div>
+    
     </div>
   );
 }
