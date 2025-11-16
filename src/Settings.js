@@ -3,7 +3,7 @@ import "rc-slider/assets/index.css";
 import "./Slider.css";
 import SettingsContext from "./SettingsContext";
 import { useContext } from "react";
-import BackButtion from "./BackButton";
+import BackButton from "./BackButton";
 import DefaultButton from "./DefaultButton";
 
 function Settings() {
@@ -28,7 +28,7 @@ function Settings() {
         max={120}
       />
       <div style={{ textAlign: "center", marginTop: "20px", display: "flex", justifyContent: "space-between", alignItems: "center"}}>
-        <BackButtion onClick={() => settingsInfo.setShowSettings(false)} />
+        <BackButton onClick={() => settingsInfo.setShowSettings(false)} />
 
           <DefaultButton onClick={() => {
             settingsInfo.setWorkMinutes(45);
