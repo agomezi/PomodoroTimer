@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Pomodoro Timer
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A customizable Pomodoro Timer application built with React that helps you manage your work and break intervals using the Pomodoro Technique.
 
-## Available Scripts
+## Features
 
-In the project directory, you can run:
+- **Customizable Timer**: Adjust work and break durations using intuitive sliders (1-120 minutes)
+- **Profile Management**: Create, edit, and save multiple timer profiles for different scenarios (studying, coding, reading, etc.)
+- **Visual Progress**: Circular progress bar with color-coded display (red for work sessions, green for breaks)
+- **Break Celebrations**: Congratulatory modal with confetti animation and audio chime when completing work sessions
+- **Fullscreen Mode**: Distraction-free fullscreen option for better focus
+- **Persistent Settings**: Your preferences and profiles are automatically saved to localStorage
+- **Default Settings**: Quickly reset to default 45-minute work / 15-minute break intervals
 
-### `npm start`
+## Getting Started
 
-Runs the app in the development mode.\
+### Installation
+
+```bash
+npm install
+```
+
+### Running the App
+
+```bash
+npm start
+```
+
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Building for Production
 
-### `npm test`
+```bash
+npm run build
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## How to Use
 
-### `npm run build`
+1. **Start a Session**: Click the play button to begin your work timer
+2. **Pause/Resume**: Use the pause button to temporarily stop the timer
+3. **Adjust Settings**: Click the settings gear icon to customize work and break durations
+4. **Create Profiles**: Click the profiles icon to create custom timer presets for different tasks
+5. **Fullscreen**: Click the fullscreen button for an immersive, distraction-free experience
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technologies Used
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- React
+- React Context API for state management
+- rc-slider for custom range sliders
+- react-circular-progressbar for timer visualization
+- canvas-confetti for celebration effects
+- localStorage for data persistence
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Project Structure
 
-### `npm run eject`
+- `Timer.js` - Main timer component with countdown logic
+- `Settings.js` - Timer configuration interface
+- `Profiles.js` - Profile management interface
+- `BreakModal.js` - Celebration modal displayed after work sessions
+- `SettingsContext.js` - Global state management
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
-
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
