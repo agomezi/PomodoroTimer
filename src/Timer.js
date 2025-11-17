@@ -8,6 +8,7 @@ import { useContext, useState, useEffect, useRef } from "react";
 import SettingsContext from "./SettingsContext";
 import ProfileButton from "./ProfileButton";
 import FullScreenButton from "./FullScreenButton";
+import BreakModal from "./BreakModal";
 
 
 const red = "#f54e4e";
@@ -18,6 +19,7 @@ function Timer() {
 
   const [isPaused, setIsPaused] = useState(true);
   const [mode, setMode] = useState("work");
+  const [showBreakModal, setShowBreakModal] = useState(false);
 
   const [secondsLeft, setSecondsLeft] = useState(0);
 
@@ -40,6 +42,15 @@ function Timer() {
         (nextMode === "work"
           ? SettingsInfo.workMinutes
           : SettingsInfo.breakMinutes) * 60;
+
+          
+      if(modeRef.current === "work" && nextMode==="break"){
+        setShowBreakModal(true);
+      }
+
+      if(modeRef.current === "break" && nextMode==="work"){
+        setShowBreakModal(false);
+      }
       setMode(nextMode);
       modeRef.current = nextMode;
       setSecondsLeft(nextSeconds);
@@ -76,6 +87,9 @@ function Timer() {
 
   return (
     <div>
+      {showBreakModal && (
+        <BreakModal onClose={()=>setShowBreakModal(false) }/>
+      )}
       <CircularProgressbar
         value={percentage}
         text={minutes + ":" + seconds}
