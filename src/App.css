@@ -34,6 +34,12 @@ button.top-row {
   right: 10px;
 }
 
+button.top-row-left {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
 button.with-text svg {
   width: 36px;
   height: 36px;
