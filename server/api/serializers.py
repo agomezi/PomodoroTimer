@@ -54,7 +54,7 @@ class UserSettingsSerializer(serializers.ModelSerializer):
             'updated_at': {'read_only': True},
         }
 
-class DailyProgresSerializer(serializers.ModelSerializer):
+class DailyProgressSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyProgress
 
