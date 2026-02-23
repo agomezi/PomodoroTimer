@@ -34,7 +34,27 @@ class UserSerializer(serializers.ModelSerializer):
             'id': {'read_only': True}
         }
 
-class DailyProgresSerializer(serializers.ModelSerializer):
+class UserSettingsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = UserSettings
+        fields = [
+            'id',
+            'focus_minutes',
+            'short_break_minutes',
+            'long_break_minutes',
+            'daily_goal_sessions',
+            'sound_enabled',
+            'auto_start_break',
+            'auto_start_focus',
+            'updated_at',
+        ]
+
+        extra_kwargs = {
+            'id': {'read_only': True },
+            'updated_at': {'read_only': True},
+        }
+
+class DailyProgressSerializer(serializers.ModelSerializer):
     class Meta:
         model = DailyProgress
 
