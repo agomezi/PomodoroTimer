@@ -35,3 +35,36 @@ export const clearTokens = () => {
 export const isAuthenticated = () => {
   return !!localStorage.getItem("access_token");
 };
+
+export const register = async (username, email, password) => {
+  try {
+    const response = await api.post("/register/", {
+      username,
+      email,
+      password,
+    });
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.detail || "Registration failed");
+  }
+};
+
+export const login = async (username, password) => {
+  try {
+    const response = await api.post("/token/", {
+      username,
+      password,
+    });
+
+    // Response contains: { access: "...", refresh: "..." }
+    const { access, refresh } = response.data;
+
+    // Automatically save tokens to localStorage
+    saveTokens(access, refresh);
+
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.detail || "Login failed");
+  }
+};
