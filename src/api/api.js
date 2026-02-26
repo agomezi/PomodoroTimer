@@ -57,14 +57,61 @@ export const login = async (username, password) => {
       password,
     });
 
-    // Response contains: { access: "...", refresh: "..." }
     const { access, refresh } = response.data;
 
-    // Automatically save tokens to localStorage
     saveTokens(access, refresh);
 
     return response.data;
   } catch (error) {
     throw new Error(error.response?.data?.detail || "Login failed");
+  }
+};
+
+export const refreshAccessToken = async () => {
+  try {
+    const refreshToken = localStorage.getItem("refresh_token");
+
+    if (!refreshToken) {
+      throw new Error("No refresh token available");
+    }
+
+    const response = await api.post("/token/refresh/", {
+      refresh: refreshToken,
+    });
+
+    localStorage.setItem("access_token", response.data.access);
+    return response.data.access;
+  } catch (error) {
+    clearTokens();
+    throw new Error("Session expired. Please log in again.");
+  }
+};
+
+export const getProfile = async () => {
+  try {
+    const response = await api.get("/profile/");
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.detail || "Failed to fetch profile");
+  }
+};
+
+export const getSettings = async () => {
+  try {
+    const response = await api.get("/settings/");
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.detail("Failed to fetch settings"));
+  }
+};
+
+export const updateSettings = async (settingsData) => {
+  try {
+    const response = await api.put("/settings/", settingsData);
+    return response.data;
+  } catch (error) {
+    throw new Error(
+      error.response?.data?.detail || "Failed to update settings",
+    );
   }
 };
