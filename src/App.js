@@ -4,6 +4,14 @@ import Settings from "./Settings";
 import { useState, useEffect } from "react";
 import SettingsContext from "./SettingsContext";
 import Profiles from "./Profiles";
+import Login from "./components/Login";
+import Register from "./components/Register";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from "react-router-dom";
 
 function App() {
   const [showSettings, setShowSettings] = useState(false);
@@ -73,7 +81,7 @@ function App() {
   }, [workMinutes, breakMinutes, profiles]);
 
   return (
-    <main>
+    <Router>
       <SettingsContext.Provider
         value={{
           showSettings,
@@ -91,9 +99,28 @@ function App() {
           deleteProfile,
         }}
       >
-        {showProfiles ? <Profiles /> : showSettings ? <Settings /> : <Timer />}
+        <Routes>
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
+          <Route
+            path="/timer"
+            element={
+              <main>
+                {" "}
+                {showProfiles ? (
+                  <Profiles />
+                ) : showSettings ? (
+                  <Settings />
+                ) : (
+                  <Timer />
+                )}
+              </main>
+            }
+          />
+          <Route path="/" element={<Navigate to="/timer" replace />} />
+        </Routes>
       </SettingsContext.Provider>
-    </main>
+    </Router>
   );
 }
 
