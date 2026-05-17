@@ -1,11 +1,9 @@
 import axios from "axios";
-
 const API_BASE_URL = "http://localhost:8000/api";
-
 const api = axios.create({
   baseURL: API_BASE_URL,
   headers: {
-    "Content-Type": "applications/json",
+    "Content-Type": "application/json",
   },
 });
 
@@ -22,7 +20,7 @@ api.interceptors.request.use(
   },
 );
 
-export const saveTokens = () => {
+export const saveTokens = (accessToken, refreshToken) => {
   localStorage.setItem("access_token", accessToken);
   localStorage.setItem("refresh_token", refreshToken);
 };
@@ -56,9 +54,7 @@ export const login = async (username, password) => {
       username,
       password,
     });
-
     const { access, refresh } = response.data;
-
     saveTokens(access, refresh);
 
     return response.data;
@@ -78,8 +74,8 @@ export const refreshAccessToken = async () => {
     const response = await api.post("/token/refresh/", {
       refresh: refreshToken,
     });
-
     localStorage.setItem("access_token", response.data.access);
+
     return response.data.access;
   } catch (error) {
     clearTokens();
@@ -101,7 +97,7 @@ export const getSettings = async () => {
     const response = await api.get("/settings/");
     return response.data;
   } catch (error) {
-    throw new Error(error.response?.data?.detail("Failed to fetch settings"));
+    throw new Error(error.response?.data?.detail || "Failed to fetch settings");
   }
 };
 
@@ -115,3 +111,35 @@ export const updateSettings = async (settingsData) => {
     );
   }
 };
+
+export const getProgress = async (days = null) => {
+  try {
+    const url = days ? `/progress/?days=${days}` : "/progress/";
+    const response = await api.get(url);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.detail || "Failed to fetch progress");
+  }
+};
+
+export const logSession = async (durationMinutes) => {
+  try {
+    const response = await api.post("/progress/log-session/", {
+      duration_minutes: durationMinutes,
+    });
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.detail || "Failed to log session");
+  }
+};
+
+export const getStats = async () => {
+  try {
+    const response = await api.get("/stats/");
+    return response.data;
+  } catch (error) {
+    throw new Error(error.response?.data?.detail || "Failed to fetch stats");
+  }
+};
+
+export default api;
