@@ -11,6 +11,7 @@ import FullScreenButton from "./FullScreenButton";
 import BreakModal from "./BreakModal";
 import AuthButton from "./components/AuthButton";
 import { useAuth } from "./context/AuthContext";
+import { logSession } from "./api/api";
 
 const red = "#f54e4e";
 const green = "#4aec8c";
@@ -38,18 +39,29 @@ function Timer() {
     setSecondsLeft(secondsLeftRef.current);
   }
   useEffect(() => {
-    function switchMode() {
-      const nextMode = modeRef.current == "work" ? "break" : "work";
+    async function switchMode() {
+      const currentMode = modeRef.current;
+      const nextMode = currentMode == "work" ? "break" : "work";
       const nextSeconds =
         (nextMode === "work"
           ? SettingsInfo.workMinutes
           : SettingsInfo.breakMinutes) * 60;
 
-      if (modeRef.current === "work" && nextMode === "break") {
-        setShowBreakModal(true);
+      if (currentMode === "work" && user) {
+        const durationMinutes = SettingsInfo.workMinutes;
+
+        try {
+          await logSession(durationMinutes);
+          console.log(`Session Logged: ${durationMinutes} minutes`);
+        } catch (error) {
+          console.error(`Failed to log session:`, error);
+        }
       }
 
-      if (modeRef.current === "break" && nextMode === "work") {
+      if (currentMode === "work" && nextMode === "break") {
+        setShowBreakModal(true);
+      }
+      if (currentMode === "break" && nextMode === "work") {
         setShowBreakModal(false);
       }
       setMode(nextMode);
@@ -73,7 +85,7 @@ function Timer() {
     }, 1000);
 
     return () => clearInterval(interval);
-  }, [SettingsInfo]);
+  }, [SettingsInfo, user]);
 
   const totalSeconds =
     mode == "work"
