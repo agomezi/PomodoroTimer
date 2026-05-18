@@ -39,6 +39,18 @@ function App() {
     return profileId ? parseInt(profileId, 10) : 1;
   });
 
+  const setWorkMinutesWithTracking = (value) => {
+    setWorkMinutes(value);
+    localStorage.setItem("lastAppliedSource", "settings");
+    localStorage.removeItem("lastAppliedProfileId");
+  };
+
+  const setBreakMinutesWithTracking = (value) => {
+    setBreakMinutes(value);
+    localStorage.setItem("lastAppliedSource", "settings");
+    localStorage.removeItem("lastAppliedProfileId");
+  };
+
   function addProfile(name, workMinutes, breakMinutes) {
     const newProfile = {
       id: nextId,
@@ -54,6 +66,11 @@ function App() {
   function applyProfile(profile) {
     setWorkMinutes(profile.workMinutes);
     setBreakMinutes(profile.breakMinutes);
+
+    localStorage.setItem("lastAppliedSource", "profile");
+    localStorage.setItem("lastAppliedProfileId", profile.id);
+    localStorage.setItem("preferredWorkMinutes", profile.workMinutes);
+    localStorage.setItem("preferredBreakMinutes", profile.breakMinutes);
 
     setShowProfiles(false);
   }
@@ -77,6 +94,12 @@ function App() {
     const updatedProfiles = profiles.filter((profile) => profile.id !== id);
 
     setProfiles(updatedProfiles);
+
+    const lastAppliedProfileId = localStorage.getItem("lastAppliedProfileId");
+    if (lastAppliedProfileId && parseInt(lastAppliedProfileId, 10) === id) {
+      localStorage.removeItem("lastAppliedSource");
+      localStorage.removeItem("lastAppliedProfileId");
+    }
   }
 
   useEffect(() => {
@@ -92,13 +115,19 @@ function App() {
       localStorage.removeItem("preferredWorkMinutes");
       localStorage.removeItem("preferredBreakMinutes");
     }
-    if ((prevUserRef.current == null || prevUserRef.current === undefined) && user != null) {
-      getSettings()
-        .then((s) => {
-          setWorkMinutes(s.focus_minutes);
-          setBreakMinutes(s.short_break_minutes);
-        })
-        .catch(() => {});
+    if (
+      (prevUserRef.current == null || prevUserRef.current === undefined) &&
+      user != null
+    ) {
+      const lastAppliedSource = localStorage.getItem("lastAppliedSource");
+      if (lastAppliedSource !== "profile") {
+        getSettings()
+          .then((s) => {
+            setWorkMinutes(s.focus_minutes);
+            setBreakMinutes(s.short_break_minutes);
+          })
+          .catch(() => {});
+      }
     }
     prevUserRef.current = user;
   }, [user]);
@@ -111,8 +140,8 @@ function App() {
           setShowSettings,
           workMinutes,
           breakMinutes,
-          setWorkMinutes,
-          setBreakMinutes,
+          setWorkMinutes: setWorkMinutesWithTracking,
+          setBreakMinutes: setBreakMinutesWithTracking,
           showProfiles,
           setShowProfiles,
           profiles,
