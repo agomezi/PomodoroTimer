@@ -9,13 +9,15 @@ import SettingsContext from "./SettingsContext";
 import ProfileButton from "./ProfileButton";
 import FullScreenButton from "./FullScreenButton";
 import BreakModal from "./BreakModal";
-
+import AuthButton from "./components/AuthButton";
+import { useAuth } from "./context/AuthContext";
 
 const red = "#f54e4e";
 const green = "#4aec8c";
 
 function Timer() {
   const SettingsInfo = useContext(SettingsContext);
+  const { user } = useAuth();
 
   const [isPaused, setIsPaused] = useState(true);
   const [mode, setMode] = useState("work");
@@ -43,12 +45,11 @@ function Timer() {
           ? SettingsInfo.workMinutes
           : SettingsInfo.breakMinutes) * 60;
 
-          
-      if(modeRef.current === "work" && nextMode==="break"){
+      if (modeRef.current === "work" && nextMode === "break") {
         setShowBreakModal(true);
       }
 
-      if(modeRef.current === "break" && nextMode==="work"){
+      if (modeRef.current === "break" && nextMode === "work") {
         setShowBreakModal(false);
       }
       setMode(nextMode);
@@ -86,9 +87,9 @@ function Timer() {
   if (seconds < 10) seconds = "0" + seconds;
 
   return (
-    <div>
+    <div style={{ position: "relative" }}>
       {showBreakModal && (
-        <BreakModal onClose={()=>setShowBreakModal(false) }/>
+        <BreakModal onClose={() => setShowBreakModal(false)} />
       )}
       <CircularProgressbar
         value={percentage}
@@ -119,16 +120,14 @@ function Timer() {
       <div style={{ marginTop: "20px" }}>
         <SettingsButton onClick={() => SettingsInfo.setShowSettings(true)} />
       </div>
-      <div>
-        {" "}
-        <ProfileButton
-          onClick={() => SettingsInfo.setShowProfiles(true)}
-        />{" "}
+      <div style={{ marginTop: "20px" }}>
+        <AuthButton />
       </div>
-      <div>
-        <FullScreenButton/>
+      {user && (
+        <ProfileButton onClick={() => SettingsInfo.setShowProfiles(true)} />
+      )}
 
-      </div>
+      <FullScreenButton />
     </div>
   );
 }

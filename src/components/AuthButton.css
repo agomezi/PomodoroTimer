@@ -1,0 +1,85 @@
+.auth-button-container {
+  display: flex;
+  justify-content: center;
+}
+
+.auth-button-logged-in {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  background-color: white;
+  padding: 8px 16px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.auth-button-username {
+  font-size: 14px;
+  font-weight: 500;
+  color: #374151;
+}
+
+.auth-button-logout {
+  background-color: #ef4444;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.15s ease;
+}
+
+.auth-button-logout:hover {
+  background-color: #dc2626;
+}
+
+.auth-button-logout:active {
+  background-color: #b91c1c;
+}
+
+.auth-button-login {
+  display: inline-block;
+  background-color: #3b82f6;
+  color: white;
+  padding: 10px 20px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 500;
+  text-decoration: none;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: all 0.15s ease;
+}
+
+.auth-button-login:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.auth-button-login:active {
+  background-color: #1d4ed8;
+  transform: translateY(0);
+}
+
+@media (max-width: 640px) {
+  .auth-button-logged-in {
+    padding: 6px 12px;
+    gap: 8px;
+  }
+
+  .auth-button-username {
+    font-size: 13px;
+  }
+
+  .auth-button-logout {
+    padding: 5px 10px;
+    font-size: 12px;
+  }
+
+  .auth-button-login {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}

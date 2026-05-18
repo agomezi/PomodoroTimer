@@ -28,16 +28,20 @@ button.with-text {
   line-height: 36px;
 }
 
-button.top-row {
-  position: absolute;
-  top: 10px;
-  right: 10px;
+button.top-row-right {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  width: auto;
 }
 
 button.top-row-left {
-  position: absolute;
-  top: 0;
-  left: 0;
+  position: fixed;
+  top: 20px;
+  left: 20px;
+  z-index: 100;
+  width: auto;
 }
 
 button.with-text svg {
@@ -46,6 +50,24 @@ button.with-text svg {
   float: left;
   margin-right: 5px;
   vertical-align: middle;
+}
+
+@media (max-width: 640px) {
+  button.top-row-left {
+    top: 12px;
+    left: 12px;
+  }
+
+  button.top-row-right {
+    right: 12px;
+  }
+}
+
+.timer-user-greeting {
+  margin: 16px 0 0;
+  font-size: 15px;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
 }
 
 label {
