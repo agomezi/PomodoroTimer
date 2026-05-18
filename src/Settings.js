@@ -2,7 +2,7 @@ import Slider from "rc-slider";
 import "rc-slider/assets/index.css";
 import "./Slider.css";
 import SettingsContext from "./SettingsContext";
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import BackButton from "./BackButton";
 import DefaultButton from "./DefaultButton";
 import { useAuth } from "./context/AuthContext";
@@ -13,6 +13,9 @@ function Settings() {
   const { user } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showSaved, setShowSaved] = useState(false);
+  const debounceRef = useRef(null);
+  const fadeTimerRef = useRef(null);
   useEffect(() => {
     const loadSettings = async () => {
       if (!user) return;
@@ -40,10 +43,12 @@ function Settings() {
     if (!user) return;
     try {
       await updateSettings({
-        focus_Minutes: workMinutes,
+        focus_minutes: workMinutes,
         short_break_minutes: breakMinutes,
       });
-
+      setShowSaved(true);
+      if (fadeTimerRef.current) clearTimeout(fadeTimerRef.current);
+      fadeTimerRef.current = setTimeout(() => setShowSaved(false), 2500);
       console.log("Settings saved");
     } catch (err) {
       console.error("Failed to save settings: ", err);
@@ -53,12 +58,18 @@ function Settings() {
 
   const handleWorkMinutesChange = (newValue) => {
     settingsInfo.setWorkMinutes(newValue);
-    saveToBackend(newValue, settingsInfo.breakMinutes);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      saveToBackend(newValue, settingsInfo.breakMinutes);
+    }, 700);
   };
 
   const handleBreakMinutesChange = (newValue) => {
     settingsInfo.setBreakMinutes(newValue);
-    saveToBackend(settingsInfo.workMinutes, newValue);
+    if (debounceRef.current) clearTimeout(debounceRef.current);
+    debounceRef.current = setTimeout(() => {
+      saveToBackend(settingsInfo.workMinutes, newValue);
+    }, 700);
   };
 
   const handleResetToDefaults = () => {
@@ -112,6 +123,9 @@ function Settings() {
             borderRadius: "6px",
             fontSize: "14px",
             color: "#166534",
+            opacity: showSaved ? 1 : 0,
+            transition: "opacity 0.5s ease",
+            pointerEvents: "none",
           }}
         >
           ✓ Settings synced to your account

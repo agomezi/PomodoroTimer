@@ -1,8 +1,10 @@
 import "./App.css";
 import Timer from "./Timer";
 import Settings from "./Settings";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import SettingsContext from "./SettingsContext";
+import { useAuth } from "./context/AuthContext";
+import { getSettings } from "./api/api";
 import Profiles from "./Profiles";
 import Login from "./components/Login";
 import Register from "./components/Register";
@@ -14,6 +16,9 @@ import {
 } from "react-router-dom";
 
 function App() {
+  const { user } = useAuth();
+  const prevUserRef = useRef(undefined);
+
   const [showSettings, setShowSettings] = useState(false);
   const [showProfiles, setShowProfiles] = useState(false);
   const [workMinutes, setWorkMinutes] = useState(() => {
@@ -79,6 +84,24 @@ function App() {
     localStorage.setItem("preferredBreakMinutes", breakMinutes);
     localStorage.setItem("savedProfiles", JSON.stringify(profiles));
   }, [workMinutes, breakMinutes, profiles]);
+
+  useEffect(() => {
+    if (prevUserRef.current != null && user === null) {
+      setWorkMinutes(45);
+      setBreakMinutes(15);
+      localStorage.removeItem("preferredWorkMinutes");
+      localStorage.removeItem("preferredBreakMinutes");
+    }
+    if ((prevUserRef.current == null || prevUserRef.current === undefined) && user != null) {
+      getSettings()
+        .then((s) => {
+          setWorkMinutes(s.focus_minutes);
+          setBreakMinutes(s.short_break_minutes);
+        })
+        .catch(() => {});
+    }
+    prevUserRef.current = user;
+  }, [user]);
 
   return (
     <Router>
